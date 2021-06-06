@@ -1,4 +1,4 @@
-<h3>/*get number of students*/</h3>
+/*get number of students*/
 select count(1) from students;
 
 /*get students population in each year*/
@@ -108,6 +108,22 @@ order by course_count DESC
 ) res
 where course_count>0
 
+
+*/ find the DSA students details with grades */
+
+select con.contact_first_name, con.contact_last_name, stud.student_population_code_ref,
+	grad.grade_course_code_ref as course_name, grad.grade_score
+	from grades grad
+	
+	inner join students stud
+	on grad.grade_student_epita_email_ref = stud.student_epita_email
+	
+	inner join contacts con
+	on stud.student_contact_ref = con.contact_email
+	
+where
+	student_population_code_ref = 'DSA'
+	
 
 
   
