@@ -147,7 +147,7 @@ from students stud
 group by cont.contact_first_name, cont.contact_last_name, stud.student_epita_email
 
 
-
+/* list the course tought by teacher */
 
 
 select * from teachers
