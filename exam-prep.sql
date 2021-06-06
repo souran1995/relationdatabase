@@ -112,6 +112,27 @@ where
 	student_population_code_ref = 'DSA'
 	
 
+/* attendance percentage for a student */
+
+select (sum_atten/total_atten::float)*100 attendance_percentage, res.attendance_student_ref, res.attendance_course_ref, res.attendance_population_year_ref from
+(
+select count(1) as total_atten, sum(s.attendance_presence) as sum_atten,
+s.attendance_student_ref, s.attendance_course_ref, s.attendance_population_year_ref
+from attendance as s
+where s.attendance_student_ref='jamal.vanausdal@epita.fr'
+group by s.attendance_student_ref, s.attendance_course_ref, s.attendance_population_year_ref
+) res
+order by attendance_percentage
+  
+
+/* avg grade for DSA students*/
+select avg(g.grade_score) as avg_grade, pop.population_code as population
+from grades as g inner join programs as p
+on g.grade_course_code_ref=p.program_course_code_ref
+inner join populations as pop
+on pop.population_code=p.program_assignment
+where pop.population_code='DSA'
+group by pop.population_code
 
   
 select * from teachers
