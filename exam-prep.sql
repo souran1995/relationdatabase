@@ -31,16 +31,6 @@ on c.course_code=s.session_course_ref
 where c.course_code='SE_ADV_DB'
 
 
-/*find the student with most absents
-select count(a.attendance_student_ref) as absents, a.attendance_student_ref*/
-select sum(a.attendance_presence) as absents,
-c.contact_first_name, c.contact_last_name
-from contacts as c
-left join students as s on s.student_contact_ref=c.contact_email
-left join attendance as a on s.student_epita_email=a.attendance_student_ref
-group by c.contact_first_name, c.contact_last_name
-order by absents ASC
-limit 2
 
 /*find the student with most absents*/
 select count(a.attendance_student_ref) as absents,
