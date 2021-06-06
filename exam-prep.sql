@@ -92,7 +92,19 @@ on c.contact_email = t.teacher_contact_ref
 LEFT OUTER JOIN sessions as s
   ON t.teacher_epita_email = s.session_prof_ref
   WHERE s.session_prof_ref IS NULL
-  
+
+/*list of teacher who attend the total session */
+select con.contact_first_name, con.contact_last_name, tea.teacher_contact_ref, sum(session_course_rev_ref)
+	from teachers tea
+	inner join contacts con
+	on con.contact_email = tea.teacher_contact_ref
+	inner join sessions sess
+	on tea.teacher_epita_email = sess.session_prof_ref
+
+group by con.contact_first_name, con.contact_last_name, tea.teacher_contact_ref
+order by sum
+
+
   
 select * from teachers
 select * from sessions
