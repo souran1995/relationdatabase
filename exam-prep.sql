@@ -134,7 +134,22 @@ on pop.population_code=p.program_assignment
 where pop.population_code='DSA'
 group by pop.population_code
 
-  
+/* All student average grade*/
+
+Select cont.contact_first_name, cont.contact_last_name, stud.student_epita_email, avg(g.grade_score)
+from students stud
+	inner join contacts cont
+	on cont.contact_email = stud.student_contact_ref
+	
+	inner join grades g
+	on stud.student_epita_email = g.grade_student_epita_email_ref
+
+group by cont.contact_first_name, cont.contact_last_name, stud.student_epita_email
+
+
+
+
+
 select * from teachers
 select * from sessions
 select * from courses
