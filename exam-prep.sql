@@ -94,6 +94,21 @@ select con.contact_first_name, con.contact_last_name, tea.teacher_contact_ref, s
 group by con.contact_first_name, con.contact_last_name, tea.teacher_contact_ref
 order by sum
 
+/*solution 2nd maybe first is wrong but we have to confirm first*/
+select * from
+(
+SELECT count(s.session_course_ref) as course_count, c.contact_first_name, c.contact_last_name, t.teacher_epita_email
+from contacts as c
+inner join teachers as t
+on c.contact_email = t.teacher_contact_ref
+LEFT OUTER JOIN sessions as s
+  ON t.teacher_epita_email = s.session_prof_ref
+group by c.contact_first_name, c.contact_last_name, t.teacher_epita_email
+order by course_count DESC
+) res
+where course_count>0
+
+
 
   
 select * from teachers
