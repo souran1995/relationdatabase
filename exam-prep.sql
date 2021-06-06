@@ -53,10 +53,11 @@ limit 1
 
 /*find students who are not graded*/
 /*first solution*/
-select s.student_epita_email
-from students as s 
-where s.student_epita_email not in 
-(select g.grade_student_epita_email_ref from grades as g)
+SELECT a.student_epita_email, b.grade_score 
+    FROM students a 
+        LEFT JOIN grades b 
+            ON a.student_epita_email=b.grade_student_epita_email_ref
+                WHERE b.grade_score IS NULL
 
 /*second solution*/
 SELECT s.student_epita_email
@@ -148,6 +149,23 @@ group by cont.contact_first_name, cont.contact_last_name, stud.student_epita_ema
 
 
 /* list the course tought by teacher */
+select distinct con.contact_first_name, con.contact_last_name, sess.session_course_ref
+	from teachers tea
+	
+	inner join contacts con
+	on con.contact_email = tea.teacher_contact_ref
+	
+	inner join sessions sess
+	on tea.teacher_epita_email = sess.session_prof_ref
+	
+
+
+-- find the teachers who are not giving any courses
+select s.student_epita_email
+from students as s 
+where s.student_epita_email not in 
+(select g.grade_student_epita_email_ref from grades as g)
+
 
 
 select * from teachers
