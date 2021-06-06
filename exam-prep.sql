@@ -44,12 +44,14 @@ order by absents ASC
 limit 2
 
 /*find the course with most absents*/
-select sum(a.attendance_presence) as absents, c.course_name
-from courses as c
-left join attendance as a on c.course_code=a.attendance_course_ref
-group by c.course_name
-order by absents ASC
-limit 1
+SELECT b.course_name, count(a.attendance_presence) Absences
+    FROM attendance a
+        LEFT JOIN courses b
+            ON a.attendance_course_ref = b.course_code
+                WHERE attendance_presence = 0 
+                    GROUP BY a.attendance_course_ref, b.course_name
+                        ORDER BY Absences DESC LIMIT 1;
+			
 
 /*find students who are not graded*/
 /*first solution*/
